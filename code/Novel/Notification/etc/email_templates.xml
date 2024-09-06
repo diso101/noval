@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * PwC India
+ *
+ * @category Magento
+ * @package  Novel_Notification
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+ */ 
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template 
+        id="novel_notification_mail_scheme"
+        label="Payment Success After Scheme"
+        file="payment_success_after_scheme.html"
+        sortOrder="10"
+        type="html" 
+        module="Novel_Notification" 
+        area="frontend"/>
+
+        <template 
+        id="novel_notification_mail_reminder"
+        label="Payment Reminder"
+        file="payment_reminder.html"
+        sortOrder="20" 
+        type="html" 
+        module="Novel_Notification" 
+        area="frontend"/>
+
+        <template 
+        id="novel_notification_mail_emi"
+        label="EMIs Payment Notification"
+        file="payment_success_emi.html" 
+        sortOrder="30"
+        type="html" 
+        module="Novel_Notification" 
+        area="frontend"/>
+
+        <template 
+        id="novel_notification_mail_overdue"
+        label="Payment Overdue"
+        sortOrder="40"
+        file="payment_overdue.html" 
+        type="html" 
+        module="Novel_Notification" 
+        area="frontend"/>
+</config>

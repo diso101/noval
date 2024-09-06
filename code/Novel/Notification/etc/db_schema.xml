@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * PwC India
+ *
+ * @category Magento
+ * @package  HCG_IntegrationLayer
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+   <table name="sms_notification" resource="default" engine="innodb" comment="Sales Order">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" padding="10" identity="true" comment="Entity Id"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <column xsi:type="text" name="payload" nullable="true" comment="Payload"/>
+        <column xsi:type="varchar" name="source_id" nullable="false" length="50" comment="Sms Source Id"/>
+        <column xsi:type="varchar" name="to" nullable="false" length="13" comment="To Number"/>
+        <column xsi:type="text" name="message" nullable="true" comment="Message Details"/>
+        <column xsi:type="tinyint" name="status" nullable="true" comment="Sms Status"/>
+        <column xsi:type="text" name="reason" nullable="true" comment="Failed Reason"/>
+        <column xsi:type="varchar" name="updates" nullable="false" length="50" comment="Read | Seen | Delivered Updates"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Transaction Date"/>
+  </table>
+ </schema> 

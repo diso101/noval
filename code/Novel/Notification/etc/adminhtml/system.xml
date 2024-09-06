@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+/**
+ * PwC India
+ *
+ * @category Magento
+ * @package  Novel_Notification
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+ */ 
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+    <tab id="novel_login_otp" translate="label" sortOrder="200">
+            <label>Novel</label>
+        </tab>
+        <section id="novel_notification" translate="label" sortOrder="200"
+                showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Notification</label>
+            <tab>novel_login_otp</tab>
+            <resource>Novel_Notification::config</resource>
+            <group id="mail" translate="label" sortOrder="11"
+                    showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Mail</label>
+                 <field id="scheme" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Payment Success After Scheme</label>
+                    <source_model>Novel\Notification\Model\Config\Source\SchemeOptions</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>    
+                    <field id="reminder" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Payment Reminder</label>
+                    <source_model>Novel\Notification\Model\Config\Source\SchemeOptions</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>    
+                    <field id="emi" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>EMIs Payment Notification</label>
+                    <source_model>Novel\Notification\Model\Config\Source\SchemeOptions</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>    
+                    <field id="overdue" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Payment Overdue</label>
+                    <source_model>Novel\Notification\Model\Config\Source\SchemeOptions</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>              
+            </group>
+
+              <group id="whatsapp" translate="label" sortOrder="11"
+                    showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Whatsapp</label>
+                 <field id="from" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>From</label>
+                    <comment>Enter the From Mobile Number</comment>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="endpoint" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API Endpoint</label>
+                    <comment>Enter the API Endpoint URL</comment>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="key1" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API Key 1</label>
+                    <comment>Enter the API Key 1</comment>
+                    <validate>required-entry</validate>
+                    <!-- <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model> -->
+                </field>
+                <!-- <field id="key2" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API Key 2</label>
+                    <comment>Enter the API Key 2</comment>
+                    <validate>required-entry</validate>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field> -->
+                <field id="auth_key" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Auth Key</label>
+                    <comment>Enter the Auth Key</comment>
+                    <validate>required-entry</validate>
+                    <!-- <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model> -->
+                </field>
+                <!-- Additional Configuration Fields -->
+                <field id="webhook_dn_id" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Webhook DN Id</label>
+                    <comment>Enter Webhook DN Id</comment>
+                </field>
+              <group id="customer" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Customer Template</label>
+                    <field id="creation_template_id" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Customer Creation Template Id</label>
+                            <comment>Enter Template Id</comment>
+                    </field>
+                    <field id="scheme_template_id" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Scheme Account Creation Template Id</label>
+                            <comment>Enter Template Id</comment>
+                    </field>
+                    <field id="update_template_id" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Profile Update Template Id</label>
+                            <comment>Enter Template Id</comment>
+                    </field>    
+                </group>
+
+                <group id="payment" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Payment Template</label>
+                    <!-- Template Fields -->
+                    <field id="success_template_id" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Payment Success Template Id</label>
+                        <comment>Enter Template Id</comment>
+                    </field>
+                    <field id="reminder_emi_template_id" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Payment Remider EMI Template Id</label>
+                        <comment>Enter Template Id</comment>
+                    </field>
+                    <field id="success_emi_template_id" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Payment EMI Success Template Id</label>
+                        <comment>Enter Template Id</comment>
+                    </field>
+                    <field id="overdue_template_id" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Payment Overdue Template Id</label>
+                        <comment>Enter Template Id</comment>
+                    </field>
+                </group>
+
+                  <group id="redemption" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Payment Template</label>
+                    <!-- Template Fields -->
+                    <field id="redemption_scheme_template_id" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Payment Success Template Id</label>
+                        <comment>Enter Template Id</comment>
+                    </field>
+                    <field id="auto_template_id" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Payment Remider EMI Template Id</label>
+                        <comment>Enter Template Id</comment>
+                    </field>
+                </group>
+
+                <group id="closure" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Pre-Closure</label>
+                    <!-- Template Fields -->
+                    <field id="pre_template_id" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Pre-Closure Template Id</label>
+                        <comment>Enter Template Id</comment>
+                    </field>
+                </group>
+
+                <group id="test" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Test Message</label>
+
+                    <!-- Template Fields -->
+                  <field id="to" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>To</label>
+                        <validate>validate-digits</validate>                         
+                  </field>
+                  <field id="send_test_message" translate="label" type="button" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Send Test Message</label>
+                    <frontend_model>Novel\Notification\Block\Adminhtml\System\Config\Button</frontend_model>
+                    <!-- <backend_model>Novel\Notification\Model\Config\Backend\Button</backend_model> -->
+                  </field>
+                </group>
+                                  
+            </group>
+        </section>
+    </system>
+</config>

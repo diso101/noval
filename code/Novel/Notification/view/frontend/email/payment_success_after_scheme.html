@@ -1,0 +1,15 @@
+{{template config_path="design/email/header_template"}}
+<h1>{{trans "Prescription Notification"}}</h1>
+<p>{{var prescriptionId}}</p>
+<p>{{var notApprovedMessage}}</p>
+
+<p>Order ID: {{var order.increment_id}}</p>
+<p>Prescription Status: Canceled</p>
+<p>Customer Name: {{var customerName}}</p>
+<p>Customer Email: {{var customerEmail}}</p>
+<p>Billing Address:</p>
+<p>{{var billingAddress.street}}</p>
+<p>{{var billingAddress.city}}, {{var billingAddress.region}}, {{var billingAddress.postcode}}</p>
+<p>{{var billingAddress.country_id}}</p>
+
+{{template config_path="design/email/footer_template"}}
