@@ -89,7 +89,6 @@
                 <field id="to_test" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>To</label>
                         <validate>validate-digits</validate>     
-                        <default>919876543210</default>                    
                     </field>
                         <!-- Template Fields -->
                     <field id="templates" translate="label" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">

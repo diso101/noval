@@ -11,7 +11,7 @@
 ! -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Backend/etc/menu.xsd">
     <menu>
-    <add id="Novel_Notification::notification" title="Notification" module="Novel_Notification" sortOrder="60"  resource="Novel_Notification::notification"  icon="Novel_Notification/images/custom_icon.png"/>
+    <add id="Novel_Notification::notification" title="Notification" module="Novel_Notification" sortOrder="60"  resource="Novel_Notification::notification"/>
         <add id="Novel_Notification::whatsapp" title="Whatsapp Notification" module="Novel_Notification" sortOrder="2" parent="Novel_Notification::notification" action="notification/notification" resource="Novel_Notification::whatsapp" />
     </menu>
 </config>
