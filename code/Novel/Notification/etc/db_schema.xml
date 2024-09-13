@@ -4,7 +4,7 @@
  * PwC India
  *
  * @category Magento
- * @package  HCG_IntegrationLayer
+ * @package  Novel_Notification
  * @author   PwC India
  * @license  GNU General Public License ("GPL") v3.0
  */
@@ -22,6 +22,7 @@
         <column xsi:type="tinyint" name="status" nullable="true" comment="Sms Status"/>
         <column xsi:type="text" name="reason" nullable="true" comment="Failed Reason"/>
         <column xsi:type="varchar" name="updates" nullable="false" length="50" comment="Read | Seen | Delivered Updates"/>
+        <column xsi:type="varchar" name="mid" nullable="false" length="50" comment="Response MID"/>
         <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
         <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Transaction Date"/>
   </table>

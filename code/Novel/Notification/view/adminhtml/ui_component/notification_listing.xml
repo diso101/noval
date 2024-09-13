@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
+<!-- /**
  * PwC India
  *
  * @category Magento
- * @package  HCG_ListofSource
+ * @package  Novel_Notification
  * @author   PwC India
  * @license  GNU General Public License ("GPL") v3.0
- -->
+ */ -->
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
@@ -268,6 +268,20 @@
                     <item name="sorting" xsi:type="string">desc</item>
                     <item name="sortOrder" xsi:type="number">80</item>
                     <item name="label" xsi:type="string" translate="true">Reason</item>
+                </item>
+            </argument>
+        </column>
+        <column name="mid">
+            <argument name="data" xsi:type="array">
+                <item name="js_config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/column</item>
+                </item>
+                <item name="config" xsi:type="array">
+                    <item name="indexField" xsi:type="string">mid</item>
+                    <!-- <item name="filter" xsi:type="string">text</item> -->
+                    <item name="sorting" xsi:type="string">desc</item>
+                    <item name="sortOrder" xsi:type="number">90</item>
+                    <item name="label" xsi:type="string" translate="true">MID</item>
                 </item>
             </argument>
         </column>

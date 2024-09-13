@@ -3,7 +3,7 @@
  * PwC India
  *
  * @category Magento
- * @package  HCG_PrescriptionManual
+ * @package  Novel_Notification
  * @author   PwC India
  * @license  GNU General Public License ("GPL") v3.0
  */
@@ -53,6 +53,7 @@ class MailHelper extends AbstractHelper
      * @param StoreManagerInterface $storeManager
      * @param StateInterface $state
      * @param OrderFactory $orderFactory
+     * @param ScopeConfigInterface $scopeConfig
      * @return mixed
      */
     public function __construct(
@@ -75,6 +76,7 @@ class MailHelper extends AbstractHelper
      * Get Details
      *
      * @param Order $order
+     * @param string $templateId
      * @return mixed
      */
     public function sendEmail($order, $templateId)

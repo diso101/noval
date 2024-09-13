@@ -15,7 +15,7 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Novel\Notification\Model\SendNotification;
 use Magento\Backend\App\Action\Context;
 
-class Send extends Action
+class AjaxSms extends Action
 {
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
@@ -55,30 +55,41 @@ class Send extends Action
         if (!$this->getRequest()->isAjax()) {
             return $this->_redirect('adminhtml/system_config/edit/section/notification_settings');
         }
+        $template = $this->getRequest()->getParam('template_id');
+        $param = $this->getRequest()->getParam('param');
+        $templateType = $this->getRequest()->getParam('template_type');
         $toNumber = $this->getRequest()->getParam('to');
-        $template = SendNotification::PAYMENT_REMINDER_EMI;
-        $vars = [
-            'test1',
-            'test2',
-            'test3',
-            'test4'
-        ];
+
+        // $template = SendNotification::PAYMENT_REMINDER_EMI;
+        $paramArray = $this->generateTestArray($param);
+        $vars =  $paramArray;
 
         $result = $this->resultJsonFactory->create();
         try {
-
-            $response = $this->sendNotification->sendSms($toNumber, $template, $vars);
+            $response = $this->sendNotification->sendSms($toNumber, $template, $vars, $templateType);
+            $output = $this->sendNotification->response;
             if ($response) {
-                return $result->setData(['success' => true, 'message' => __('Message sent successfully! '
-                .json_encode($response))]);
+                return $result->setData(['success' => true, 'message' => __('Message sent successfully! ')]);
             } else {
-                return $result->setData(['success' => false, 'message' =>
-                __('Failed to send message. Please try again.')]);
+                    return $result->setData(['success' => false, 'message' =>
+                    __($output['statusDesc'] ?? 'Unknown Error')]);
             }
             
         } catch (\Exception $e) {
             return $result->setData(['success' => false,
-            'message' => __('Failed to send test message. Please try again.' . $e->getMessage())]);
+            'message' => __($e->getMessage())]);
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function generateTestArray($number)
+    {
+        $result = [];
+        for ($i = 1; $i <= $number; $i++) {
+            $result[] = "test" . $i;
+        }
+        return $result;
     }
 }

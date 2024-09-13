@@ -26,3 +26,7 @@
     text-align: center;
     text-transform: uppercase;
 }
+
+#row_novel_notification_template_templates .value {
+    width: 80% !important; /* Adjust the percentage as needed */
+}

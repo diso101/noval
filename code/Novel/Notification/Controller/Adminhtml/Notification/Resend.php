@@ -3,8 +3,11 @@
  * PwC India
  *
  * @category Magento
- * @package  Novel_SchemeMaster
+ * @package  Novel_Notification
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
  */
+
 namespace Novel\Notification\Controller\Adminhtml\Notification;
 
 use Magento\Backend\App\Action;
@@ -43,7 +46,7 @@ class Resend extends Action
 
     /**
      * Constructor
-     * 
+     *
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      * @param SmsModelFactory $smsModel
@@ -75,7 +78,27 @@ class Resend extends Action
     public function execute()
     {
         $notificationId = $this->getRequest()->getParam('notification_id');
+        $method = $this->getRequest()->getParam('method');
+
         $sms = $this->smsModel->create()->load($notificationId, 'entity_id');
+
+        if ($method == 'resend') {
+            $this->resend($sms);
+        } else {
+            $this->retry($sms);
+        }
+        // Redirect to the notification index page
+        $resultRedirect = $this->resultRedirectFactory->create();
+        $resultRedirect->setPath('notification/notification/index');
+        return $resultRedirect;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function resend($sms)
+    {
+
         $newSms = $this->smsModel->create();
         $newSms->setSourceId($sms->getSourceId());
         $newSms->setMessage($sms->getMessage());
@@ -86,23 +109,49 @@ class Resend extends Action
             $responses = $this->sendNotification->resend($sms->getPayload());
             if (isset($responses['statusCode']) && $responses['statusCode'] == "200") {
                 $newSms->setStatus(true);
+                $newSms->setMid($responses['mid']);
                 $this->messageManager->addSuccessMessage(__('Notification has been resent successfully.'));
             } else {
                 $newSms->setStatus(false);
                 $newSms->setReason(json_encode($responses));
-                $this->messageManager->addErrorMessage(__('Failed to resend notification: ') . ($responses['message'] ?? 'Unknown error'));
+                $this->messageManager->addErrorMessage(__('Failed to resend notification: ')
+                .($responses['message'] ?? 'Unknown error'));
             }
         } catch (\Exception $e) {
             $newSms->setStatus(false);
             $newSms->setReason($e->getMessage());
-            $this->messageManager->addErrorMessage(__('An error occurred while resending the notification: ') . $e->getMessage());
+            $this->messageManager->addErrorMessage(__('An error occurred while resending the notification: ')
+            . $e->getMessage());
         } finally {
             $newSms->save();
         }
+    }
 
-        // Redirect to the notification index page
-        $resultRedirect = $this->resultRedirectFactory->create();
-        $resultRedirect->setPath('notification/notification/index');
-        return $resultRedirect;
+    /**
+     * @inheritDoc
+     */
+    protected function retry($sms)
+    {
+        try {
+            $responses = $this->sendNotification->resend($sms->getPayload());
+            if (isset($responses['statusCode']) && $responses['statusCode'] == "200") {
+                $sms->setStatus(true);
+                $sms->setMid($responses['mid']);
+                $sms->setReason('');
+                $this->messageManager->addSuccessMessage(__('Notification has been sent successfully.'));
+            } else {
+                $sms->setStatus(false);
+                $sms->setReason(json_encode($responses));
+                $this->messageManager->addErrorMessage(__('Failed to send notification: ')
+                . ($responses['statusDesc'] ?? 'Unknown error'));
+            }
+        } catch (\Exception $e) {
+            $sms->setStatus(false);
+            $sms->setReason($e->getMessage());
+            $this->messageManager->addErrorMessage(__('An error occurred while retrying the notification: ')
+            . $e->getMessage());
+        } finally {
+            $sms->save();
+        }
     }
 }

@@ -1,4 +1,13 @@
 <?php
+/**
+ * PwC India
+ *
+ * @category Magento
+ * @package  Novel_Notification
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+ */
+
 namespace Novel\Notification\Model\SmsModel;
 
 use Magento\Framework\App\Request\DataPersistorInterface;
@@ -19,7 +28,9 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
      * @param string $primaryFieldName
      * @param string $requestFieldName
      * @param CollectionFactory $collectionFactory
-     * @param DataPersistorInterface $dataPersistor
+     * @param StoreManagerInterface $storeManager
+     * @param [] $meta
+     * @param [] $data
      */
     public function __construct(
         $name,

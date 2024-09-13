@@ -3,10 +3,11 @@
  * PwC India
  *
  * @category Magento
- * @package  Novel_SchemeMaster
+ * @package  Novel_Notification
  * @author   PwC India
  * @license  GNU General Public License ("GPL") v3.0
  */
+
 namespace Novel\Notification\Controller\Adminhtml\Notification;
 
 use Magento\Backend\App\Action;

@@ -1,4 +1,13 @@
 <?php
+/**
+ * PwC India
+ *
+ * @category Magento
+ * @package  Novel_Notification
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+ */
+
 namespace Novel\Notification\Model\Config\Source;
 
 class SchemeOptions extends \Magento\Framework\DataObject implements \Magento\Framework\Option\ArrayInterface

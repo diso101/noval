@@ -1,28 +1,23 @@
 <?php
+/**
+ * PwC India
+ *
+ * @category Magento
+ * @package  Novel_Notification
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+ */
 
 namespace Novel\Notification\Model;
 
 use Magento\Framework\HTTP\Client\Curl;
 use Magento\Framework\Exception\LocalizedException;
 use Novel\Notification\Helper\WhatsappConfig;
-use Novel\Notification\Helper\CustomerTemplateConfig;
-use Novel\Notification\Helper\PaymentTemplateConfig;
-use Novel\Notification\Helper\OtherTemplateConfig;
+use Novel\Notification\Helper\Template;
 use Novel\Notification\Model\SmsModelFactory;
 
 class SendNotification
 {
-    public const CUSOMTER_CREATION = 'creation_template_id';
-    public const CUSOMTER_SCHEME_CREATION = 'scheme_template_id';
-    public const CUSOMTER_PROFILE_UPDATE = 'update_template_id';
-    public const PAYMENT_SUCCESS = 'success_template_id';
-    public const PAYMENT_REMINDER_EMI = 'reminder_emi_template_id';
-    public const PAYMENT_SUCCESS_EMI = 'success_emi_template_id';
-    public const PAYMENT_OVERDUE = 'overdue_template_id';
-    public const REDEMPTION_SCHEME = 'redemption_scheme_template_id';
-    public const REDEMPTION_AUTO = '_auto_template_id';
-    public const PRE_CLOSURE = 'pre_template_id';
-
     /**
      * @var Curl
      */
@@ -34,19 +29,9 @@ class SendNotification
     protected $whatsappConfig;
 
     /**
-     * @var CustomerTemplateConfig
+     * @var Template
      */
-    protected $customerTemplateConfig;
-
-    /**
-     * @var PaymentTemplateConfig
-     */
-    protected $paymentTemplateConfig;
-
-    /**
-     * @var OtherTemplateConfig
-     */
-    protected $otherTemplateConfig;
+    protected $template;
 
     /**
      * @var string
@@ -79,29 +64,28 @@ class SendNotification
     protected $smsModel;
 
     /**
+     * @var array
+     */
+    public $response;
+
+    /**
      * Constructor
      *
      * @param Curl $curl
      * @param WhatsappConfig $whatsappConfig
-     * @param CustomerTemplateConfig $customerTemplateConfig
-     * @param PaymentTemplateConfig $paymentTemplateConfig
      * @param SmsModelFactory $smsModel
-     * @param OtherTemplateConfig $otherTemplateConfig
+     * @param Template $template
      */
     public function __construct(
         Curl $curl,
         WhatsappConfig $whatsappConfig,
-        CustomerTemplateConfig $customerTemplateConfig,
-        PaymentTemplateConfig $paymentTemplateConfig,
         SmsModelFactory $smsModel,
-        OtherTemplateConfig $otherTemplateConfig
+        Template $template
     ) {
         $this->curl = $curl;
         $this->whatsappConfig = $whatsappConfig;
-        $this->customerTemplateConfig = $customerTemplateConfig;
-        $this->paymentTemplateConfig = $paymentTemplateConfig;
         $this->smsModel = $smsModel;
-        $this->otherTemplateConfig = $otherTemplateConfig;
+        $this->template = $template;
     }
 
     /**
@@ -266,10 +250,12 @@ class SendNotification
         try {
             if (isset($responses['statusCode']) && $responses['statusCode'] == "200") {
                 $sms->setStatus(true);
+                $sms->setMid($responses['mid']);
                 return true;
             } else {
                 $sms->setStatus(false);
-                $sms->setReason($response);
+                $sms->setReason(isset($responses['statusDesc']) ? $responses['statusDesc']
+                : json_encode($responses));
                 return false;
             }
         } catch (\Exception $e) {
@@ -302,7 +288,6 @@ class SendNotification
         if (empty($url) || empty($key) || empty($authKey)) {
             throw new LocalizedException(__('Missing Some configuration settings.'));
         }
-     
         try {
             // Set options for the cURL request
             $this->curl->setOption(CURLOPT_RETURNTRANSFER, true);
@@ -314,6 +299,7 @@ class SendNotification
             $this->curl->post($url, $payload);
             $response = $this->curl->getBody();
             $responses = json_decode($response, true);
+            $this->response = $responses;
             return $responses;
             // $responses = [];
         } catch (\Exception $e) {
@@ -324,53 +310,54 @@ class SendNotification
     /**
      * @inheritDoc
      */
-    public function sendSms($to, $template, $data, $mediaType = null)
+    public function sendSms($to, $template, $data)
     {
-        $this->setToNumber($to);
-     
-        // Set variables
-        $vars = [];
-        switch ($template) {
-            case self::CUSOMTER_CREATION:
-                $this->templateId = $this->customerTemplateConfig->getCustomerCreationTemplateId();
-                break;
-            case self::CUSOMTER_SCHEME_CREATION:
-                $this->templateId = $this->customerTemplateConfig->getSchemeCreationTemplateId();
-                break;
-            case self::CUSOMTER_PROFILE_UPDATE:
-                $this->templateId = $this->customerTemplateConfig->getUpdateTemplateId();
-                break;
-            case self::PAYMENT_SUCCESS:
-                $this->templateId = $this->paymentTemplateConfig->getPaymentSuccessTemplateId();
-                break;
-            case self::PAYMENT_REMINDER_EMI:
-                $this->setMediaType('MEDIA_TEMPLATE');
-                $this->setButton("actions", "url", "0", "https://www.google.com/");
-                $this->setVars($data);
-                $this->templateId = $this->paymentTemplateConfig->getPaymentReminderEmiTemplateId();
-                break;
-            case self::PAYMENT_SUCCESS_EMI:
-                $this->templateId = $this->paymentTemplateConfig->getPaymentSuccessEmiTemplateId();
-                break;
-            case self::PAYMENT_OVERDUE:
-                $this->templateId = $this->paymentTemplateConfig->getPaymentOverdueTemplateId();
-                break;
-            case self::REDEMPTION_SCHEME:
-                $this->templateId = $this->otherTemplateConfig->getRedemptionSchemeTemplateId();
-                break;
-            case self::REDEMPTION_AUTO:
-                $this->templateId = $this->otherTemplateConfig->getRedemptionAutoTemplateId();
-                break;
-            case self::PRE_CLOSURE:
-                $this->templateId = $this->otherTemplateConfig->getPreClosureTemplateId();
-                break;
-            case 'rt_einvoice':
-                $this->setVars($data);
-                $this->templateId = 'rt_einvoice';
-                break;
-            default:
-                throw new LocalizedException(__('Invalid template type'));
+        // Validate the 'to' parameter
+        if (empty($to)) {
+            throw new LocalizedException(__('Invalid recipient mobile number.'));
         }
+
+        // Validate the 'template' parameter
+        if (empty($template)) {
+            throw new LocalizedException(__('Template ID cannot be empty.'));
+        }
+
+        // Validate the 'data' parameter
+        if (!is_array($data)) {
+            throw new LocalizedException(__('Data must be an array.'));
+        }
+
+        $finalTemplate = null;
+        $count = 0;
+
+        $templates = json_decode($this->template->getTemplates(), true);
+        foreach ($templates as $templatList) {
+            if ($templatList['template_id'] == $template) {
+                $finalTemplate = $template;
+                $count = $templatList['param'];
+                $this->setMediaType($templatList['template_type']);
+                continue;
+            }
+        }
+
+        if ($finalTemplate == null) {
+            throw new LocalizedException(__('Please add Template id in config'));
+        }
+
+        if (count($data) != $count) {
+            throw new LocalizedException(__("Need $count params for selected template id"));
+        }
+    
+        // Set recipient number
+        $this->setToNumber($to);
+
+        // Set variables
+        $this->setVars($data);
+        $this->templateId = $finalTemplate;
+        // Set a button if needed
+        // $this->setButton("actions", "url", "0", "https://www.google.com/");
+
+        // Send the message
         return $this->sendWhatsapp();
     }
 }

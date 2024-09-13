@@ -3,7 +3,7 @@
  * PwC India
  *
  * @category Magento
- * @package  HCG_PrescriptionManual
+ * @package  Novel_Notification
  * @author   PwC India
  * @license  GNU General Public License ("GPL") v3.0
  */
@@ -53,16 +53,32 @@ class Action extends \Magento\Ui\Component\Listing\Columns\Column
     {
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as & $item) {
-                $item[$this->getData('name')] = [
-                    'view' => [
+                $button = null;
+                if ($item['status'] == 1) {
+                    $button = [
                         'href' => $this->urlBuilder->getUrl(
                             static::URL_PATH,
                             [
-                                'notification_id' => $item['entity_id']
+                                'notification_id' => $item['entity_id'],
+                                'method' => 'resend'
                             ]
                         ),
                         'label' => __('Resend')
-                    ]
+                    ];
+                } else {
+                    $button = [
+                        'href' => $this->urlBuilder->getUrl(
+                            static::URL_PATH,
+                            [
+                                'notification_id' => $item['entity_id'],
+                                'method' => 'retry'
+                            ]
+                        ),
+                        'label' => __('Retry')
+                    ];
+                }
+                $item[$this->getData('name')] = [
+                    'view' => $button
                 ];
             }
         }

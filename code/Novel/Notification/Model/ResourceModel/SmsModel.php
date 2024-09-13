@@ -1,4 +1,12 @@
 <?php
+/**
+ * PwC India
+ *
+ * @category Magento
+ * @package  Novel_Notification
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+ */
 
 namespace Novel\Notification\Model\ResourceModel;
 

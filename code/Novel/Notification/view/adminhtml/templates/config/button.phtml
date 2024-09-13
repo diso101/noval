@@ -1,8 +1,8 @@
 <button id="send_test_message_button" class="button" type="button">
-    <span id="send_test_message_text"><?= __('Send Test Message') ?></span>
+    <span id="send_test_message_text"><?= ('Send Test Message') ?></span>
 </button>
 
-<script type="text/javascript">
+<script>
     require([
         'jquery', 
         'mage/url', 
@@ -12,14 +12,14 @@
             $('#send_test_message_button').on('click', function (e) {
                 e.preventDefault(); // Prevent any default behavior like form submission
 
-                var ajaxUrl = '<?= $block->getAjaxUrl(); ?>'; // URL for the AJAX request
+                var ajaxUrl = '<?=(string) $block->getAjaxUrl(); ?>'; // URL for the AJAX request
                 var formKey = window.FORM_KEY; // Get the form key from Magento's global JS variable
                 var toNumber = $("#novel_notification_whatsapp_test_to").val();
 
                 var spanText = $('#send_test_message_text');
 
                 // Show the loader GIF
-                spanText.html('<img src="<?= $this->getViewFileUrl('mui/images/ajax-loader.gif'); ?>" alt="Loading..." />');
+                spanText.html('<img src="<?=(string) $block->getViewFileUrl('mui/images/ajax-loader.gif'); ?>" alt="Loading..." />');
 
                 $.ajax({
                     url: ajaxUrl,
@@ -43,7 +43,7 @@
                                 actions: { always: function() {} }
                             });
                         }
-                        spanText.html('<?= __('Send Test Message') ?>');
+                        spanText.html('<?=('Send Test Message') ?>');
                     },
                     error: function () {
                         // Revert span text back to original

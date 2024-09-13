@@ -3,7 +3,9 @@
  * PwC India
  *
  * @category Magento
- * @package  HCG_VideoList
+ * @package  Novel_Notification
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
  */
 
 namespace Novel\Notification\Model;
