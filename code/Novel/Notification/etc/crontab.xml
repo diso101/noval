@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * PwC India
+ *
+ * @category Magento
+ * @package  Novel_Notification
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="whatsapp">
+         <job name="whatsapp_job" instance="Novel\Notification\Cron\Runner" method="execute">
+            <!-- <schedule>*/5 * * * *</schedule> -->
+            <config_path>groups/cron_config/fields/time/value</config_path>
+        </job>
+    </group>
+</config>

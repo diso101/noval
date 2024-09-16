@@ -64,114 +64,114 @@ class UpdateTemplate implements DataPatchInterface
     {
 
         $configData = [
-            'customercreationkycstep' => [
-                'template_id' => 'customercreationkycstep',
-                'fields' => 'name',
-                'param' => '1',
-                'template_type' => 'TEMPLATE'
+            "overdue_payment_igqp" => [
+                "template_id" => "overdue_payment_igqp",
+                "fields" => "name,amount,month",
+                "param" => "3",
+                "template_type" => "TEMPLATE"
             ],
-            'customercreationesignstep' => [
-                'template_id' => 'customercreationesignstep',
-                'fields' => 'name',
-                'param' => '1',
-                'template_type' => 'TEMPLATE'
+            "overdue_payment_iggp" => [
+                "template_id" => "overdue_payment_iggp",
+                "fields" => "name,amount,month",
+                "param" => "3",
+                "template_type" => "TEMPLATE"
             ],
-            'iggppaymentsuccess' => [
-                'template_id' => 'iggppaymentsuccess',
-                'fields' => 'name',
-                'param' => '1',
-                'template_type' => 'TEMPLATE'
+            "igqp_payment_confrimation" => [
+                "template_id" => "igqp_payment_confrimation",
+                "fields" => "name",
+                "param" => "1",
+                "template_type" => "TEMPLATE"
             ],
-            'igqppaymentsuccess' => [
-                'template_id' => 'igqppaymentsuccess',
-                'fields' => 'name',
-                'param' => '1',
-                'template_type' => 'TEMPLATE'
+            "iggp_payment_confrimation" => [
+                "template_id" => "iggp_payment_confrimation",
+                "fields" => "name",
+                "param" => "1",
+                "template_type" => "TEMPLATE"
             ],
-            'emireminderiggp' => [
-                'template_id' => 'emireminderiggp',
-                'fields' => 'name,amount,month',
-                'param' => '3',
-                'template_type' => 'TEMPLATE'
+            "emi_reminder_iggp" => [
+                "template_id" => "emi_reminder_iggp",
+                "fields" => "name,amount,month",
+                "param" => "3",
+                "template_type" => "TEMPLATE"
             ],
-            'emireminderigqp' => [
-                'template_id' => 'emireminderigqp',
-                'fields' => 'name,amount,month',
-                'param' => '3',
-                'template_type' => 'TEMPLATE'
+            "emi_reminder_igqp" => [
+                "template_id" => "emi_reminder_igqp",
+                "fields" => "name,amount,month",
+                "param" => "3",
+                "template_type" => "TEMPLATE"
             ],
-            'iggppaymentconfrimation' => [
-                'template_id' => 'iggppaymentconfrimation',
-                'fields' => 'name',
-                'param' => '1',
-                'template_type' => 'TEMPLATE'
+            "igqp_payment_success" => [
+                "template_id" => "igqp_payment_success_",
+                "fields" => "name",
+                "param" => "1",
+                "template_type" => "TEMPLATE"
             ],
-            'igqppaymentconfrimation' => [
-                'template_id' => 'igqppaymentconfrimation',
-                'fields' => 'name',
-                'param' => '1',
-                'template_type' => 'TEMPLATE'
+            "iggp_payment_success" => [
+                "template_id" => "iggp_payment_success_",
+                "fields" => "name",
+                "param" => "1",
+                "template_type" => "TEMPLATE"
             ],
-            'overduepaymentiggp' => [
-                'template_id' => 'overduepaymentiggp',
-                'fields' => 'name,amount,month',
-                'param' => '3',
-                'template_type' => 'TEMPLATE'
+            "customer_creation_esign_step" => [
+                "template_id" => "customer_creation_esign_step",
+                "fields" => "name",
+                "param" => "1",
+                "template_type" => "TEMPLATE"
             ],
-            'overduepaymentigqp' => [
-                'template_id' => 'overduepaymentigqp',
-                'fields' => 'name,amount,month',
-                'param' => '3',
-                'template_type' => 'TEMPLATE'
+            "customer_creation_kycstep" => [
+                "template_id" => "customercreation_kycstep",
+                "fields" => "name",
+                "param" => "1",
+                "template_type" => "TEMPLATE"
             ],
-            'profileupdateiggp' => [
-                'template_id' => 'profileupdateiggp',
-                'fields' => 'name,amount,month',
-                'param' => '3',
-                'template_type' => 'TEMPLATE'
+            "profileupdateiggp" => [
+                "template_id" => "profileupdateiggp",
+                "fields" => "name,amount,month",
+                "param" => "1",
+                "template_type" => "TEMPLATE"
             ],
-            'profileupdateigqp' => [
-                'template_id' => 'profileupdateigqp',
-                'fields' => 'name',
-                'param' => '1',
-                'template_type' => 'TEMPLATE'
+            "profileupdateigqp" => [
+                "template_id" => "profileupdateigqp",
+                "fields" => "name",
+                "param" => "1",
+                "template_type" => "TEMPLATE"
             ],
-            'iggpedemption' => [
-                'template_id' => 'iggpedemption',
-                'fields' => 'name,amount,accoutno',
-                'param' => '3',
-                'template_type' => 'TEMPLATE'
+            "iggpedemption" => [
+                "template_id" => "iggpedemption",
+                "fields" => "name,amount,accoutno",
+                "param" => "3",
+                "template_type" => "TEMPLATE"
             ],
-            'igqpedemption' => [
-                'template_id' => 'igqpedemption',
-                'fields' => 'name,amount,accoutno',
-                'param' => '3',
-                'template_type' => 'TEMPLATE'
+            "igqpedemption" => [
+                "template_id" => "igqpedemption",
+                "fields" => "name,amount,accoutno",
+                "param" => "3",
+                "template_type" => "TEMPLATE"
             ],
-            'iggpautoredemption' => [
-                'template_id' => 'iggpautoredemption',
-                'fields' => 'name,amount',
-                'param' => '2',
-                'template_type' => 'TEMPLATE'
+            "iggpautoredemption" => [
+                "template_id" => "iggpautoredemption",
+                "fields" => "name,amount",
+                "param" => "2",
+                "template_type" => "TEMPLATE"
             ],
-            'igqpautoredemption' => [
-                'template_id' => 'igqpautoredemption',
-                'fields' => 'name,amount',
-                'param' => '2',
-                'template_type' => 'TEMPLATE'
+            "igqpautoredemption" => [
+                "template_id" => "igqpautoredemption",
+                "fields" => "name,amount",
+                "param" => "2",
+                "template_type" => "TEMPLATE"
             ],
-            'iggppreclosure' => [
-                'template_id' => 'iggppreclosure',
-                'fields' => 'name,amount',
-                'param' => '2',
-                'template_type' => 'TEMPLATE'
+            "iggppreclosure" => [
+                "template_id" => "iggppreclosure",
+                "fields" => "name,amount",
+                "param" => "2",
+                "template_type" => "TEMPLATE"
             ],
-            'igqppreclosure' => [
-                'template_id' => 'igqppreclosure',
-                'fields' => 'name,amount',
-                'param' => '2',
-                'template_type' => 'TEMPLATE'
-            ],
+            "igqppreclosure" => [
+                "template_id" => "igqppreclosure",
+                "fields" => "name,amount",
+                "param" => "2",
+                "template_type" => "TEMPLATE"
+            ]
         ];
 
         // Serialize data if needed

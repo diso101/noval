@@ -19,6 +19,11 @@ use Magento\Store\Model\StoreManagerInterface;
 class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 {
     /**
+     * @var array
+     */
+    protected $loadedData;
+
+    /**
      * @var SearchResult
      */
     protected $collection;
@@ -53,6 +58,14 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
      */
     public function getData()
     {
-        return $this->collection;
+        if (isset($this->loadedData)) {
+            return $this->loadedData;
+        }
+        $items = $this->collection->getItems();
+        foreach ($items as $list) {
+             $itemData = $list->getData();
+             $this->loadedData[$list->getId()] = $itemData;
+        }
+        return $this->loadedData;
     }
 }

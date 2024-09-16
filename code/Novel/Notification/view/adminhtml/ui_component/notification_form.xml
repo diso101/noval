@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- /**
+ * PwC India
+ *
+ * @category Magento
+ * @package  Novel_Notification
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+ */ -->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">         
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">notification_form.notification_form_data_source</item>
+            <item name="deps" xsi:type="string">notification_form.notification_form_data_source</item>
+        </item> 
+        <item name="label" xsi:type="string" translate="true">Notification</item>
+           <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="array">
+                <item name="name" xsi:type="string">back</item>
+                <item name="label" xsi:type="string" translate="true">Back</item>
+                <item name="class" xsi:type="string">back</item>
+              <item name="url" xsi:type="string">notification/notification/resend</item>
+            </item>
+            <item name="resend" xsi:type="string">Novel\Notification\Block\Adminhtml\Edit\FormButton</item>
+        </item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">notification_form</item>
+        </item>
+    <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+
+    <dataSource name="notification_form_data_source">       
+        <argument name="data" xsi:type="array">        
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Novel\Notification\Model\SmsModel\DataProvider</argument>
+            <argument name="name" xsi:type="string">notification_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">entity_id</argument>
+            <argument name="requestFieldName" xsi:type="string">entity_id</argument>
+              <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+               <item name="submit_url" xsi:type="url" path="*/*/resend" />
+            </item>
+         </argument>
+        </argument>
+    </dataSource>
+    <fieldset name="general">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">false</item>
+                <item name="label" xsi:type="string" translate="true">Whatsapp SMS</item>
+                <item name="sortOrder" xsi:type="number">20</item>
+            </item>
+        </argument>
+         <field name="entity_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Id</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">whatsapp</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataScope" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+        </field>
+        <field name="source_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Template Id</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">whatsapp</item>
+                    <item name="dataScope" xsi:type="string">source_id</item>
+                    <item name="disabled" xsi:type="string">true</item>
+                </item>
+            </argument>
+        </field>
+        <field name="message">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Message</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">whatsapp</item>
+                    <item name="dataScope" xsi:type="string">message</item>
+                </item>
+            </argument>
+        </field>
+        <field name="status">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="label" xsi:type="string" translate="true">Status</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="source" xsi:type="string">video</item>
+                    <item name="dataScope" xsi:type="string">status</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="disabled" xsi:type="string">true</item>
+                    <item name="valueMap" xsi:type="array">
+                <item name="true" xsi:type="string">1</item>
+                <item name="false" xsi:type="string">0</item>
+            </item>
+                </item>
+            </argument>
+        </field>
+        <field name="reason">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Error Reason</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">whatsapp</item>
+                    <item name="dataScope" xsi:type="string">reason</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="disabled" xsi:type="string">true</item>
+                </item>
+            </argument>
+        </field>
+        <field name="to">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">To</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">whatsapp</item>
+                    <item name="dataScope" xsi:type="string">to</item>
+                    <item name="disabled" xsi:type="string">true</item>
+                    <!-- <item name="visible" xsi:type="boolean">false</item> -->
+                </item>
+            </argument>
+        </field>
+        <field name="payload">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Payload</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="source" xsi:type="string">whatsapp</item>
+                    <item name="dataScope" xsi:type="string">payload</item>
+                    <!-- Uncomment this line if you want to hide the field -->
+                    <!-- <item name="visible" xsi:type="boolean">false</item> -->
+                </item>
+            </argument>
+        </field>
+
+        <field name="mid">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">MID</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">whatsapp</item>
+                    <item name="dataScope" xsi:type="string">mid</item>
+                    <item name="disabled" xsi:type="string">true</item>
+                </item>
+            </argument>
+        </field>
+        <field name="response">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Response</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">whatsapp</item>
+                    <item name="dataScope" xsi:type="string">response</item>
+                    <item name="disabled" xsi:type="string">true</item>
+                </item>
+            </argument>
+        </field>
+        <!-- <field name="dr_name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Doctor Name</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">prescription</item>
+                    <item name="dataScope" xsi:type="string">dr_name</item>
+                    <item name="disabled" xsi:type="string">true</item>
+                </item>
+            </argument>
+        </field>
+        <field name="dr_name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Doctor Name</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">prescription</item>
+                    <item name="dataScope" xsi:type="string">dr_name</item>
+                    <item name="disabled" xsi:type="string">true</item>
+                </item>
+            </argument>
+        </field>
+         <field name="expiry_prescription">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">date</item>
+                    <item name="label" xsi:type="string" translate="true">Expiry Date</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">prescription</item>
+                    <item name="dataScope" xsi:type="string">expiry_prescription</item>
+                    <item name="disabled" xsi:type="string">true</item>
+                </item>
+            </argument>
+        </field>
+        <field name="patients_Id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">date</item>
+                    <item name="label" xsi:type="string" translate="true">Patients Id</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">prescription</item>
+                    <item name="dataScope" xsi:type="string">patients_Id</item>
+                    <item name="disabled" xsi:type="string">true</item>
+                </item>
+            </argument>
+        </field>
+        <field name="prescription_status">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="label" xsi:type="string" translate="true">Status</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="source" xsi:type="string">prescription</item>
+                    <item name="dataScope" xsi:type="string">prescription_status</item>
+                     <item name="prefer" xsi:type="string">toggle</item>
+                     <item name="disabled" xsi:type="string">true</item>
+                      <item name="valueMap" xsi:type="array">
+                <item name="true" xsi:type="string">1</item>
+                <item name="false" xsi:type="string">0</item>
+            </item>
+                </item>
+            </argument>
+        </field> -->
+    </fieldset>
+</form>

@@ -79,12 +79,29 @@ class Resend extends Action
     {
         $notificationId = $this->getRequest()->getParam('notification_id');
         $method = $this->getRequest()->getParam('method');
+        $postData = $this->getRequest()->getPostValue();
+
+        if (empty($notificationId)) {
+            $notificationId = $this->getRequest()->getParam('entity_id');
+        }
 
         $sms = $this->smsModel->create()->load($notificationId, 'entity_id');
 
+        if ($this->getRequest()->getParam('button') == 'save' ||
+        $this->getRequest()->getParam('button') == 'save_and_send') {
+            $data = $this->getRequest()->getParams();
+            $value = $sms->getData();
+            $differences = array_diff_assoc($data, $value);
+            $updatedParams = array_intersect_key($differences, $value);
+            foreach ($updatedParams as $key => $param) {
+                $sms->setData($key, $param);
+            }
+            $sms->save();
+        }
+
         if ($method == 'resend') {
             $this->resend($sms);
-        } else {
+        } elseif ($method == 'retry') {
             $this->retry($sms);
         }
         // Redirect to the notification index page
@@ -107,6 +124,8 @@ class Resend extends Action
         try {
             $newSms->setPayload($sms->getPayload());
             $responses = $this->sendNotification->resend($sms->getPayload());
+
+            $newSms->setResponse(json_encode($responses));
             if (isset($responses['statusCode']) && $responses['statusCode'] == "200") {
                 $newSms->setStatus(true);
                 $newSms->setMid($responses['mid']);
@@ -130,10 +149,11 @@ class Resend extends Action
     /**
      * @inheritDoc
      */
-    protected function retry($sms)
+    public function retry($sms)
     {
         try {
             $responses = $this->sendNotification->resend($sms->getPayload());
+            $sms->setResponse(json_encode($responses));
             if (isset($responses['statusCode']) && $responses['statusCode'] == "200") {
                 $sms->setStatus(true);
                 $sms->setMid($responses['mid']);

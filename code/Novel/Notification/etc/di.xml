@@ -26,6 +26,14 @@
 		</arguments>
 	</type>
 
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="notification_form_data_source" xsi:type="string">Novel\Notification\Model\ResourceModel\SmsModel\Grid\Collection</item>
+			</argument>
+		</arguments>
+	</type>
+
     <virtualType name="NotificationGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
 		<arguments>
 			<argument name="collection" xsi:type="object" shared="false">Novel\Notification\Model\ResourceModel\SmsModel\Collection</argument>

@@ -16,7 +16,9 @@ use Magento\Framework\View\Element\UiComponentFactory;
 
 class Action extends \Magento\Ui\Component\Listing\Columns\Column
 {
-    public const URL_PATH = 'notification/notification/resend';
+    public const URL_PATH_RESEND = 'notification/notification/resend';
+    // public const URL_PATH_RETRY = 'notification/notification/retry';
+    public const URL_PATH_VIEW = 'notification/notification/form';
 
     /**
      * @var \Magento\Framework\UrlInterface
@@ -24,7 +26,7 @@ class Action extends \Magento\Ui\Component\Listing\Columns\Column
     protected $urlBuilder;
 
     /**
-     * YourColumn constructor.
+     * Action constructor.
      *
      * @param UrlInterface $urlBuilder
      * @param ContextInterface $context
@@ -52,34 +54,50 @@ class Action extends \Magento\Ui\Component\Listing\Columns\Column
     public function prepareDataSource(array $dataSource)
     {
         if (isset($dataSource['data']['items'])) {
-            foreach ($dataSource['data']['items'] as & $item) {
-                $button = null;
+            foreach ($dataSource['data']['items'] as &$item) {
+                $actions = [];
+
+                // Add "Resend" action if status is 1
                 if ($item['status'] == 1) {
-                    $button = [
+                    $actions[] = [
                         'href' => $this->urlBuilder->getUrl(
-                            static::URL_PATH,
+                            static::URL_PATH_RESEND,
                             [
                                 'notification_id' => $item['entity_id'],
                                 'method' => 'resend'
                             ]
                         ),
-                        'label' => __('Resend')
+                        'label' => __('Resend'),
+                        'class' => 'action resend'
                     ];
                 } else {
-                    $button = [
-                        'href' => $this->urlBuilder->getUrl(
-                            static::URL_PATH,
-                            [
-                                'notification_id' => $item['entity_id'],
-                                'method' => 'retry'
-                            ]
-                        ),
-                        'label' => __('Retry')
-                    ];
+                // Add "Retry" action
+                    $actions[] = [
+                            'href' => $this->urlBuilder->getUrl(
+                                static::URL_PATH_RESEND,
+                                [
+                                    'notification_id' => $item['entity_id'],
+                                    'method' => 'resend'
+                                ]
+                            ),
+                            'label' => __('Retry'),
+                            'class' => 'action retry'
+                        ];
+
                 }
-                $item[$this->getData('name')] = [
-                    'view' => $button
+                // Add "View" action
+                $actions[] = [
+                    'href' => $this->urlBuilder->getUrl(
+                        static::URL_PATH_VIEW,
+                        ['entity_id' => $item['entity_id']]
+                    ),
+                    'label' => __('View'),
+                    'class' => 'action view'
                 ];
+
+                // echo json_encode($actions);
+                // die;
+                $item[$this->getData('name')] = $actions;
             }
         }
         return $dataSource;

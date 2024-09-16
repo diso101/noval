@@ -16,6 +16,7 @@
             <column name="entity_id"/>
         </constraint>
         <column xsi:type="text" name="payload" nullable="true" comment="Payload"/>
+        <column xsi:type="text" name="response" nullable="true" comment="Response Value"/>
         <column xsi:type="varchar" name="source_id" nullable="false" length="50" comment="Sms Source Id"/>
         <column xsi:type="varchar" name="to" nullable="false" length="13" comment="To Number"/>
         <column xsi:type="text" name="message" nullable="true" comment="Message Details"/>
