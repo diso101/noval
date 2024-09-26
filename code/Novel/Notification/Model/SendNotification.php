@@ -247,7 +247,7 @@ class SendNotification
         $jsonPayload = json_encode($payload, JSON_UNESCAPED_SLASHES);
         $sms->setPayload($jsonPayload);
         $responses = $this->send($jsonPayload);
-        $sms->setResponse($this->response);
+        $sms->setResponse(json_encode($this->response));
         try {
             if (isset($responses['statusCode']) && $responses['statusCode'] == "200") {
                 $sms->setStatus(true);
